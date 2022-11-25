@@ -8,7 +8,11 @@ routes.get("/", async (req, res) => {
   const url = process.env.BASE_URL;
 
   try {
-    const html = await axios(url);
+    const html = await axios(url, {
+      headers: {
+        referer: process.env.BASE_URL
+      }
+    });
     const root = parse(html.data);
     const data = root.querySelectorAll(".item-manga").map((item, index) => {
       const name = item.querySelector(".caption > h3 > a").textContent;
@@ -47,7 +51,11 @@ routes.get("/banner", async (req, res) => {
   const url = process.env.BASE_URL + "tim-truyen?sort=9";
 
   try {
-    const html = await axios(url);
+    const html = await axios(url, {
+      headers: {
+        referer: process.env.BASE_URL
+      }
+    });
     const root = parse(html.data);
     const data = root.querySelectorAll(".item-manga").map((item) => {
       const name = item.querySelector(
